@@ -1,6 +1,8 @@
 package com.example.strathnews.ui
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,15 +34,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.strathnews.data.News
 import com.example.strathnews.data.NewsObject
 import com.example.strathnews.data.NewsObject.newsObj1
+import com.example.strathnews.ui.Home.HomeScreen
 import com.example.strathnews.ui.theme.StrathNewsTheme
 import java.util.Date
 
 @Composable
 fun SingleNewsScreen(
-    newsTitle: String? = NewsObject.newsList.first().title
+    newsTitle: String? = NewsObject.newsList.first().title,
+    navController: NavController
 ){
     Log.d("Single news screen", "entered")
     val newsItem = NewsObject.getNews(newsTitle)
@@ -48,15 +53,16 @@ fun SingleNewsScreen(
    Column(
        modifier = Modifier.padding(top = 40.dp)
    ) {
-        NewsPage(news = newsItem)
+        NewsPage(news = newsItem, navController)
    }
 }
 
 @Composable
 fun NewsPage(
-    news: News
+    news: News,
+    navController: NavController
 ){
-    IconsRow()
+    IconsRow(navController)
     TitleRow(news.title)
     Info_Image(news.image, news.author, news.date)
     Details(news.content)
@@ -122,14 +128,18 @@ fun Details(content: String) {
 }
 
 @Composable
-fun IconsRow() {
+fun IconsRow(navController: NavController) {
     Row (
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ){
-        Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null, modifier = Modifier.clickable {  })
+        IconItem(
+            icon = Icons.Filled.ArrowBack,
+            onclick = {
+                navController.navigateUp()
+            })
         Row (
             modifier = Modifier.padding(horizontal = 4.dp)
         ){
@@ -140,18 +150,25 @@ fun IconsRow() {
     }
 }
 
-@Preview(showBackground = true,)
-@Composable
-fun SingleScreenPreview(){
-    StrathNewsTheme{
-        SingleNewsScreen(newsTitle = newsObj1.title)
-    }
-}
+//@Preview(showBackground = true,)
+//@Composable
+//fun SingleScreenPreview(){
+//    StrathNewsTheme{
+//        SingleNewsScreen(newsTitle = newsObj1.title)
+//    }
+//}
 
 @Composable
-fun IconItem(icon: ImageVector, modifier: Modifier = Modifier, color: Color = Color.Black){
+fun IconItem(
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    color: Color = Color.Black,
+    onclick: () -> Unit = {}
+){
     Box(
-        modifier = Modifier.padding(horizontal = 6.dp)
+        modifier = Modifier
+            .padding(horizontal = 6.dp)
+            .clickable { onclick }
     ){
         Icon(imageVector = icon, contentDescription = null, modifier = modifier, tint = color)
     }

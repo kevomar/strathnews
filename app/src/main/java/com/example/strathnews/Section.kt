@@ -13,7 +13,7 @@ object TopNews: Section {
 }
 
 object Sports: Section {
-    override val title = "Sports"
+    override val title = "Trending"
     override val route = "sports"
     override val category = "sports"
 }

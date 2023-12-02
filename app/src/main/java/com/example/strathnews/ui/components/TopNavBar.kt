@@ -59,7 +59,7 @@ fun TopNavBar(
                 allScreens.forEach{
                         screen ->
                     TopStrathTab(
-                        text = screen.route,
+                        text = screen.title,
                         onSelected = {  onTabSelected(screen)  },
                         selected = currentScreen == screen,
                     )
