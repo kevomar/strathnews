@@ -1,5 +1,6 @@
 package com.example.strathnews.data
 
+import android.util.Log
 import com.example.strathnews.R
 import com.example.strathnews.data.NewsObject.newsList
 import java.util.Date
@@ -103,8 +104,21 @@ object NewsObject {
             content = "Etiam vulputate gravida neque, a varius velit tempor vitae. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae."
         )
     )
+
+    fun getNews(news: String?): News {
+        val cleanNewsTitle = news?.removeSurrounding("{", "}")
+        Log.d("NewsObject", "Requested news title: $cleanNewsTitle")
+
+        val foundNews = newsList.firstOrNull { it.title == cleanNewsTitle }
+        if (foundNews != null) {
+            Log.d("NewsObject", "Found news: $foundNews")
+            return foundNews
+        } else {
+            Log.e("NewsObject", "News not found for title: $cleanNewsTitle")
+            // Handle the case where the news isn't found (return a default or handle null)
+            // Example: return a default news item or throw an exception
+            throw NoSuchElementException("News not found for title: $cleanNewsTitle")
+        }
+    }
 }
 
-fun getNews(news: String?): News {
-    return newsList.first { it.title == news }
-}

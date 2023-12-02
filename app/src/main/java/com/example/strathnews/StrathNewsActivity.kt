@@ -85,7 +85,7 @@ fun StrathNews(){
                         navBackStackEntry.arguments?.getString(SingleNews.title)
                     //pass the argument to the screen
                     Log.d("navEntry", newsTitle.toString())
-                    SingleNewsScreen()
+                    SingleNewsScreen(newsTitle)
                 }
             }
 

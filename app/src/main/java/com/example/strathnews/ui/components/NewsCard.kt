@@ -112,8 +112,8 @@ fun NewsDetails(title: String, description: String, author: String) {
 private val cardHeight = 80.dp
 private val cardWidth = 100.dp
 @Composable
-fun ListNewsCard(news: News){
-    val navController = rememberNavController()
+fun ListNewsCard(news: News, navController: NavController){
+    val navController = navController
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -128,7 +128,7 @@ fun ListNewsCard(news: News){
                     strokeWidth = 6f
                 )
             }
-            .clickable { navController.navigateToSingleNews(news.title) }
+            .clickable { navController.navigate("${SingleNews.route}/{${news.title}}") }
     ) {
         Row (
             modifier = Modifier
@@ -153,10 +153,10 @@ fun ListNewsCard(news: News){
     }
 }
 
-@Preview
-@Composable
-fun ListNewsCardPreview(){
-   StrathNewsTheme {
-       ListNewsCard(news = newsObj1)
-   }
-}
+//@Preview
+//@Composable
+//fun ListNewsCardPreview(){
+//   StrathNewsTheme {
+//       ListNewsCard(news = newsObj1)
+//   }
+//}

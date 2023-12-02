@@ -9,13 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.strathnews.data.News
 import com.example.strathnews.data.NewsObject.newsObj1
 import com.example.strathnews.ui.theme.StrathNewsTheme
 
 @Composable
 fun NewsView(
-    news: List<News>
+    news: List<News>,
+    navController: NavController
 ){
     Surface(
         modifier = Modifier.fillMaxWidth()
@@ -24,7 +26,7 @@ fun NewsView(
             modifier = Modifier.padding(top = 10.dp)
         ){
             items(news){
-                ListNewsCard(news = it)
+                ListNewsCard(news = it, navController = navController)
             }
         }
     }

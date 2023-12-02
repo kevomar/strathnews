@@ -49,16 +49,16 @@ fun HomeScreen(mainNavController: NavController){
                 TopNews(navController = mainNavController)
             }
             composable(route = Sports.route){
-                Sports()
+                Sports(navController = mainNavController)
             }
             composable(route = Entertainment.route){
-                Entertainment()
+                Entertainment(navController = mainNavController)
             }
             composable(route = Clubs.route){
-                Clubs()
+                Clubs(navController = mainNavController)
             }
             composable(route = OpinionsAndBlogs.route){
-                OpinionsAndBlogs()
+                OpinionsAndBlogs(navController = mainNavController)
             }
         }
 

@@ -11,22 +11,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.strathnews.TopNews
 import com.example.strathnews.data.NewsObject.newsList
 import com.example.strathnews.ui.components.NewsView
 import com.example.strathnews.ui.components.OtherNewsView
 
 @Composable
-fun Sports(){
+fun Sports(navController: NavController){
     Column(
         modifier = Modifier.padding(top = 17.dp)
     ) {
-        NewsView(news = newsList)
+        NewsView(news = newsList, navController = navController)
     }
 }
 
-@Preview
-@Composable
-fun SportsPreview(){
-    Sports()
-}
+//@Preview
+//@Composable
+//fun SportsPreview(){
+//    Sports()
+//}
