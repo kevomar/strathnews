@@ -1,6 +1,7 @@
 package com.example.strathnews
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.strathnews.ui.Home.HomeScreen
 import com.example.strathnews.ui.Search.SearchScreen
 import com.example.strathnews.ui.Settings.SettingScreen
+import com.example.strathnews.ui.SingleNewsScreen
 import com.example.strathnews.ui.components.BottomNav
 import com.example.strathnews.ui.theme.StrathNewsTheme
 
@@ -68,13 +70,22 @@ fun StrathNews(){
         ){_ ->
             NavHost(navController = navController, startDestination = Home.route ){
                 composable(route = Home.route){
-                    HomeScreen()
+                    HomeScreen(mainNavController = navController)
                 }
                 composable(route = Search.route) {
                     SearchScreen()
                 }
                 composable(route = Settings.route){
                     SettingScreen()
+                }
+                composable(route = SingleNews.routeWithArgs, arguments = SingleNews.arguments){
+                        navBackStackEntry ->
+                    //retrieve the passed argument
+                    val newsTitle =
+                        navBackStackEntry.arguments?.getString(SingleNews.title)
+                    //pass the argument to the screen
+                    Log.d("navEntry", newsTitle.toString())
+                    SingleNewsScreen()
                 }
             }
 

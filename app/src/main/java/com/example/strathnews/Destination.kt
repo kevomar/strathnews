@@ -33,7 +33,7 @@ object Settings: Destination {
 object SingleNews: Destination{
     override val icon = Icons.Filled.DateRange
     override val route = "single_news"
-    private const val title = "news title"
+    const val title = "news title"
     val routeWithArgs = "${SingleNews.route}/{${SingleNews.title}}"
     val arguments =  listOf(
         navArgument(title) {type = NavType.StringType}

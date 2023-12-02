@@ -1,6 +1,7 @@
 package com.example.strathnews.data
 
 import com.example.strathnews.R
+import com.example.strathnews.data.NewsObject.newsList
 import java.util.Date
 
 object NewsObject {
@@ -102,4 +103,8 @@ object NewsObject {
             content = "Etiam vulputate gravida neque, a varius velit tempor vitae. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae."
         )
     )
+}
+
+fun getNews(news: String?): News {
+    return newsList.first { it.title == news }
 }

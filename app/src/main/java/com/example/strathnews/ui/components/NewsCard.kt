@@ -1,5 +1,6 @@
 package com.example.strathnews.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,29 +20,38 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.strathnews.SingleNews
 import com.example.strathnews.data.News
 import com.example.strathnews.data.NewsObject.newsObj1
+import com.example.strathnews.ui.Home.navigateToSingleNews
 import com.example.strathnews.ui.theme.StrathNewsTheme
 import com.example.strathnews.ui.theme.gold
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsCard(news: News, onclick: () -> Unit = {}, )  {
+fun NewsCard(news: News, navController: NavController )  {
+    val navController = navController
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
+            .clickable {
+                Log.d("message", "arrived")
+                navController.navigate("${SingleNews.route}/{${news.title}}")
+            }
     ) {
         Card(
             modifier = Modifier
                 .padding(12.dp)
                 .fillMaxWidth(),
-            onClick = onclick
         ) {
             NewsImageCard(painterResource(id = news.image),
                 modifier = Modifier
@@ -92,27 +101,26 @@ fun NewsDetails(title: String, description: String, author: String) {
 }
 
 
-@Preview
-@Composable
-fun NewsCardPreview(){
-    StrathNewsTheme {
-        NewsCard(news = newsObj1, onclick = {
-
-        })
-    }
-}
+//@Preview
+//@Composable
+//fun NewsCardPreview(){
+//    StrathNewsTheme {
+//        NewsCard(news = newsObj1)
+//    }
+//}
 
 private val cardHeight = 80.dp
 private val cardWidth = 100.dp
 @Composable
 fun ListNewsCard(news: News){
+    val navController = rememberNavController()
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .padding(2.dp)
             .drawBehind {
                 val width = size.width
-                val height = size.height - width/2
+                val height = size.height - width / 2
                 drawLine(
                     color = gold,
                     start = Offset(0f, size.height),
@@ -120,7 +128,7 @@ fun ListNewsCard(news: News){
                     strokeWidth = 6f
                 )
             }
-            .clickable {  }
+            .clickable { navController.navigateToSingleNews(news.title) }
     ) {
         Row (
             modifier = Modifier
@@ -129,7 +137,8 @@ fun ListNewsCard(news: News){
             verticalAlignment = Alignment.CenterVertically
         ){
             NewsImageCard(image = painterResource(id = news.image),
-                modifier = Modifier.height(cardHeight)
+                modifier = Modifier
+                    .height(cardHeight)
                     .width(cardWidth)
             )
             Spacer(modifier = Modifier.padding(8.dp))

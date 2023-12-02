@@ -4,7 +4,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -27,7 +27,7 @@ import com.example.strathnews.ui.components.TopNavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(){
+fun HomeScreen(mainNavController: NavController){
 //    Text("This is the Home Screen from the Home package")
     val navController = rememberNavController()
     val currentBackStack by navController.currentBackStackEntryAsState()
@@ -46,7 +46,7 @@ fun HomeScreen(){
     ) {_ ->
         NavHost(navController = navController, startDestination = TopNews.route){
             composable(route = TopNews.route){
-                TopNews()
+                TopNews(navController = mainNavController)
             }
             composable(route = Sports.route){
                 Sports()
@@ -65,11 +65,11 @@ fun HomeScreen(){
     }
 }
 
-@Preview
-@Composable
-fun HomeScreenPreview(){
-    HomeScreen()
-}
+//@Preview
+//@Composable
+//fun HomeScreenPreview(){
+//    HomeScreen()
+//}
 
 fun NavHostController.navigateSingleTopTo(route: String){
     this.navigate(route) {

@@ -8,8 +8,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.example.strathnews.data.News
-import com.example.strathnews.data.NewsObject
 import com.example.strathnews.data.NewsObject.newsList
 import com.example.strathnews.ui.theme.StrathNewsTheme
 
@@ -17,14 +17,15 @@ import com.example.strathnews.ui.theme.StrathNewsTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OtherNewsView(
-    news: List<News>
+    news: List<News>,
+    navController: NavController
 ){
     Surface(
         modifier = Modifier.fillMaxWidth()
     ) {
         LazyColumn(){
             items(news){
-                NewsCard(news = it)
+                NewsCard(news = it, navController = navController)
             }
         }
 
@@ -33,10 +34,10 @@ fun OtherNewsView(
 }
 
 
-@Preview
-@Composable
-fun OtherNewsViewPreview(){
-    StrathNewsTheme {
-        OtherNewsView(newsList)
-    }
-}
+//@Preview
+//@Composable
+//fun OtherNewsViewPreview(){
+//    StrathNewsTheme {
+//        OtherNewsView(newsList)
+//    }
+//}
