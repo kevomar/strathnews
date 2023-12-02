@@ -73,7 +73,7 @@ fun StrathNews(){
                     HomeScreen(mainNavController = navController)
                 }
                 composable(route = Search.route) {
-                    SearchScreen()
+                    SearchScreen(mainNavController = navController)
                 }
                 composable(route = Settings.route){
                     SettingScreen()
